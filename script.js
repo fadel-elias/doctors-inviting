@@ -1,6 +1,7 @@
-        // Counter variable to track scroll events
+      // Counter variable to track scroll events
         let scrollCount = 0;
         let decreaseCount = 4;
+        let lastScrollTop = 0;
 
         // Function to move lines
         function moveLines() {
@@ -29,7 +30,6 @@
 
                 if (welcomePosition < screenPosition) {
                     welcomeSection.classList.add('revealed');
-                    window.removeEventListener('wheel', revealContent); // Remove the event listener after content is revealed
                 }
             }
         }
@@ -45,7 +45,6 @@
 
                 if (welcomePosition < screenPosition) {
                     welcomeSection.classList.remove('revealed');
-                    window.removeEventListener('wheel', reverseRevealContent); // Remove the event listener after content is revealed
                 }
             }
         }
@@ -57,20 +56,46 @@
             document.querySelector('.line.second').style.top = `${95 - increment}%`; // Adjust top position of the second line
         }
 
-        // Trigger the functions when the user scrolls the mouse
-        window.addEventListener('wheel', (event) => {
-            if (event.deltaY > 0 && scrollCount < 3) { // Check if scrolling down and scrollCount is less than 3
+        // Function to handle scroll events for both mouse and touch
+        function handleScroll(deltaY) {
+            if (deltaY > 0 && scrollCount < 3) { // Check if scrolling down and scrollCount is less than 3
                 moveLines();
                 revealContent();
                 adjustImageDimensions();
                 console.log(scrollCount);
-            } else if (event.deltaY < 0 && scrollCount > 0) { // Check if scrolling up
+            } else if (deltaY < 0 && scrollCount > 0) { // Check if scrolling up
                 reverseMoveLines();
                 reverseRevealContent();
                 adjustImageDimensions();
                 console.log(scrollCount);
             }
+        }
+
+        // Add event listeners for mouse wheel
+        window.addEventListener('wheel', (event) => {
+            handleScroll(event.deltaY);
         });
+
+        // Variables to track touch positions
+        let touchStartY = 0;
+        let touchEndY = 0;
+
+        // Function to handle touch start
+        function handleTouchStart(event) {
+            touchStartY = event.touches[0].clientY;
+        }
+
+        // Function to handle touch move
+        function handleTouchMove(event) {
+            touchEndY = event.touches[0].clientY;
+            let deltaY = touchStartY - touchEndY;
+            handleScroll(deltaY);
+            touchStartY = touchEndY; // Update touchStartY to the new position for continuous scrolling
+        }
+
+        // Add event listeners for touch events
+        window.addEventListener('touchstart', handleTouchStart);
+        window.addEventListener('touchmove', handleTouchMove);
 
         // Script to personalize the invitation
         window.addEventListener('load', () => {

@@ -1,0 +1,65 @@
+        /* Reset default margin and padding */
+        body, html {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Center the content vertically and horizontally */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0; /* Change to your desired background color */
+        }
+
+        /* Line dividing the page horizontally */
+        .line {
+            position: fixed;
+            width: 100%;
+            height: 2px; /* Thickness of the line */
+            background-color: #000000; /* Black line */
+            z-index: 0; /* Ensure it's behind other content */
+            transition: top 1s ease; /* Smooth transition for top property */
+            box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2); /* Shadow below the first line */
+        }
+
+        /* Second line */
+        .line.second {
+            transition: top 1s ease; /* Smooth transition for top property */
+            box-shadow: 0 -4px 4px rgba(0, 0, 0, 0.2); /* Shadow above the second line */
+        }
+
+        /* Image in the middle of the first line */
+        .line img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px; /* Adjust the size of the image as needed */
+            height: 120px; /* Adjust the size of the image as needed */
+            z-index: 1; /* Ensure it's above the line */
+        }
+
+        /* Welcome section */
+        .welcome-section {
+            position: relative; /* Ensure correct stacking order */
+            z-index: 2; /* Ensure it's above other content */
+            text-align: center;
+            opacity: 0; /* Initially hidden */
+            transform: translateY(100%) scale(0.1); /* Initially scaled down */
+            transition: opacity 0.5s ease, transform 1s ease; /* Transition effect */
+        }
+
+        /* Reveal the welcome section when it has the revealed class */
+        .welcome-section.revealed {
+            opacity: 1;
+            transform: translateY(0) scale(1); /* Final state: revealed and normal size */
+        }
+
+        /* Responsive styles */
+        @media screen and (max-width: 768px) {
+            .container {
+                max-width: 90%; /* Adjust for smaller screens */
+            }
+        }

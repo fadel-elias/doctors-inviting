@@ -5,7 +5,7 @@
 
       // Function to move lines
       function moveLines() {
-          const increment = scrollCount * 2; // Increase the movement based on scrollCount
+          const increment = scrollCount * 5; // Increase the movement based on scrollCount
           document.querySelector('.line').style.bottom = `${65 + increment}%`; // Adjust bottom position of the first line
           document.querySelector('.line.second').style.top = `${65 + increment}%`; // Adjust top position of the second line
       }
@@ -14,8 +14,8 @@
       function adjustImageDimensions() {
           const images = document.querySelectorAll('.line img');
           images.forEach(img => {
-              img.style.width = `${120 + scrollCount * 6}px`; // Increase width
-              img.style.height = `${120 - scrollCount * 3}px`; // Decrease height
+              img.style.width = `${120 + scrollCount * 15}px`; // Increase width
+              img.style.height = `${120 - scrollCount * 8}px`; // Decrease height
           });
       }
 
@@ -23,7 +23,7 @@
       function revealContent() {
           scrollCount++;
           decreaseCount--;
-          if (scrollCount === 9) { // Change the number to adjust how many scrolls are needed
+          if (scrollCount === 6) { // Change the number to adjust how many scrolls are needed
               const welcomeSection = document.getElementById('welcome');
               const welcomePosition = welcomeSection.getBoundingClientRect().top;
               const screenPosition = window.innerHeight / 0.5 + window.scrollY; // Adjust as needed
@@ -38,7 +38,7 @@
       function reverseRevealContent() {
           scrollCount--;
           decreaseCount++;
-          if (scrollCount < 9) { // Change the number to adjust how many scrolls are needed
+          if (scrollCount < 6) { // Change the number to adjust how many scrolls are needed
               const welcomeSection = document.getElementById('welcome');
               const welcomePosition = welcomeSection.getBoundingClientRect().top;
               const screenPosition = window.innerHeight / 1.5 + window.scrollY; // Adjust as needed
@@ -51,14 +51,14 @@
 
       // Function to reverse move lines
       function reverseMoveLines() {
-          const increment = decreaseCount * 2; // Increase the movement based on scrollCount
-          document.querySelector('.line').style.bottom = `${68 - increment}%`; // Adjust bottom position of the first line
-          document.querySelector('.line.second').style.top = `${68 - increment}%`; // Adjust top position of the second line
+          const increment = decreaseCount * 5; // Increase the movement based on scrollCount
+          document.querySelector('.line').style.bottom = `${95 - increment}%`; // Adjust bottom position of the first line
+          document.querySelector('.line.second').style.top = `${95 - increment}%`; // Adjust top position of the second line
       }
 
       // Function to handle scroll events for both mouse and touch
       function handleScroll(deltaY) {
-          if (deltaY > 0 && scrollCount < 9) { // Check if scrolling down and scrollCount is less than 3
+          if (deltaY > 0 && scrollCount < 6) { // Check if scrolling down and scrollCount is less than 3
               moveLines();
               revealContent();
               adjustImageDimensions();
